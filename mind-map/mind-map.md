@@ -31,7 +31,7 @@
             - Option 1: 
             - Option 2: 
           - Requirements
-            - Motor needs to be compatable with Rasberry Pi
+            - Motor needs to be compatible with Raspberry Pi
             - Motor needs to be powerful enough
             - Motor needs to be in a small form factor
             - Should be priced reasonably
@@ -62,6 +62,27 @@
         - research later
         - research later 2
 
+  - Software 
+    - Models
+        - Model Training
+          - Collect and preprocess data for training(Find a Dataset)
+          - Research past data archetypes that did well on the dataset
+          - Train and validate models for smart bin functionalities
+          - Find the sweet spot between amount of compute used & accuracy
+            - The
+        - Documentation and Reasoning
+          - Create detailed reasoning papers explaining model choices
+          - Document training process and results
+          - Maintain clear records for reproducibility
+        - Optimizing runtime
+        - Trash Detection(Crop the image to feed the model)
+    - Website Demo
+      - Develop a web-based interface to showcase smart bin features
+      - Provide live data visualization and user interaction
+      - Ensure responsive design for various devices
+    - API / Hosting on Raspberry Pi
+      - Raspberry Pi
+        - Build RESTful APIs to interact with smart bin hardware and software
 
-
-  - Software
+      - HTTPS RESTful API
+        - Ensure secure and efficient communication between components
