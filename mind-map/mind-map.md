@@ -147,3 +147,6 @@
         - Documentation
         - Provide clear API documentation 
         - Include setup guides for deploying on Raspberry Pi
+
+
+I have a vscode that makes me visualize the following md file into a mind map and export svg.
