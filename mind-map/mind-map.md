@@ -65,24 +65,85 @@
   - Software 
     - Models
         - Model Training
-          - Collect and preprocess data for training(Find a Dataset)
-          - Research past data archetypes that did well on the dataset
-          - Train and validate models for smart bin functionalities
-          - Find the sweet spot between amount of compute used & accuracy
-            - The
-        - Documentation and Reasoning
-          - Create detailed reasoning papers explaining model choices
-          - Document training process and results
-          - Maintain clear records for reproducibility
-        - Optimizing runtime
-        - Trash Detection(Crop the image to feed the model)
-    - Website Demo
-      - Develop a web-based interface to showcase smart bin features
-      - Provide live data visualization and user interaction
-      - Ensure responsive design for various devices
-    - API / Hosting on Raspberry Pi
-      - Raspberry Pi
-        - Build RESTful APIs to interact with smart bin hardware and software
+          - Tech Stack
+            - PyTorch (for model development and training)
+            - Markdown (for experiment logs and reasoning documents)
+            - Python (core programming language)
+            - Git & GitHub (version control and collaboration)
+          - Dataset acquisition and management
+            - Search for public waste classification datasets
+            - Dataset requirements:
+              - Multiple waste categories (plastic, paper, metal, organic, glass, etc.)
+              - Real-world images with diverse backgrounds and lighting
+              - Sufficient labeled samples per class
+              - High-quality, clear images (minimal noise/blurring)
+              - Images from various angles/distances
+              - Publicly available for research/commercial use
+              - Well-documented labels and metadata
+              - Prefer datasets similar to smart bin camera output
+              - Data augmentation to increase diversity (rotation, scaling, lighting, etc.)
+          - Research and Experimentation
+            - Review successful approaches (archetypes, augmentations, etc.)
+            - Analyze effective data preprocessing techniques
+            - Compare pretrained models on the dataset
+            - Investigate augmentations for robustness to blur and real-world noise
+            - Useful resources:
+              - [Papers with Code](https://huggingface.co/papers/trending)
+              - [Arxiv](https://arxiv.org/)
+              - [PyTorch Docs](https://docs.pytorch.org/docs/stable/index.html)
+              - [Medium](https://medium.com/)
+              - [Kaggle](https://www.kaggle.com/)
+          - Model Training and Validation
+            - Split data into training, validation, and test sets
+            - Experiment with architectures (ResNet, VGG, GoogLeNet, etc.)
+            - Track metrics: accuracy, precision, recall, F1-score
+            - Test on real-world examples (collect data from smart bin in use)
+            - Implement early stopping to avoid overfitting
+            - Tune hyperparameters (learning rate, batch size, optimizer)
+            - Visualize training/validation curves and confusion matrices
+            - Automate evaluation and reporting with scripts
+            - Document all experiments for reproducibility
+          - Compute vs. Accuracy Trade-offs
+            - Evaluate accuracy vs. computational requirements on Raspberry Pi
+            - Benchmark inference speed and latency on target hardware
+            - Optimize models for edge deployment (reduce size/complexity)
+            - Monitor and document power consumption during inference
+            - Balance performance and efficiency for real-world use
+          - Documentation and Reasoning
+            - Maintain detailed experiment logs in Markdown
+            - Write clear reasoning documents for model and design choices
+            - Document training processes, hyperparameters, and results
+            - Summarize findings, lessons learned, and next steps
+            - Ensure all documentation supports reproducibility and collaboration
+          - Trash Detection
+            - Develop robust trash detection pipeline:
+              - Preprocess images (resize, normalize, denoise)
+              - Implement automatic cropping to focus on trash region
+              - Explore object detection models (e.g., YOLO, SSD) for bin contents
+              - Integrate detection with classification pipeline
+              - Test detection on varied real-world scenarios (different trash types, lighting, occlusions)
 
-      - HTTPS RESTful API
-        - Ensure secure and efficient communication between components
+    - Website Demo
+      - Tech Stack
+        - Streamlit (primary for rapid prototyping and demos)
+        - Consider React or Flask for more professional outcome
+        - TypeScript for frontend if using React
+      - Features
+        - Not really anything crazy just a demo of the model
+
+    - API & Hosting on Raspberry Pi
+      - On-Device Inference
+        - Run machine learning models directly on Raspberry Pi for low-latency predictions
+        - Optimize model for efficient edge inference (quantization, pruning, etc.)
+      - RESTful API
+        - Expose HTTPS endpoints for integration with web UI and other services
+        - Endpoints for image upload, inference results, bin status, and control commands
+        - Implement authentication and rate limiting for security
+        - Use Flask/FastAPI for lightweight API server
+        - System Integration
+        - Ensure seamless communication between hardware (motors, sensors, camera)API, and web interface
+        - Monitor resource usage and performance on Raspberry Pi
+        - Enable remote updates and diagnostics via API
+        - Documentation
+        - Provide clear API documentation 
+        - Include setup guides for deploying on Raspberry Pi
