@@ -4,7 +4,7 @@ import torch
 from torchutils.data import DataLoader, random_split, Subset
 from torchvision import datasets, transforms
 import torch.nn as nn
-
+from tqdm import tqdm
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -143,6 +143,8 @@ def train_one_epoch(model, train_loader, criterion, optimizer):
     model.train()
     running_loss, correct, total = 0.0, 0, 0
 
+    loop = tqdm(train_loader, desc="Training", leave=False)
+
     for images, labels in train_loader:
 
         images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True), labels.to(device, non_blocking=True)
@@ -159,6 +161,8 @@ def train_one_epoch(model, train_loader, criterion, optimizer):
         correct += (preds == labels).sum().item()
         total += labels.size(0)
 
+        loop.set_postfix(loss=loss.item())
+
     return running_loss / total, correct / total
 
 @torch.no_grad()
@@ -167,6 +171,8 @@ def evaluate(model, val_loader, criterion):
     model.eval()
 
     running_loss, correct, total = 0.0, 0, 0
+
+    loop = tqdm(val_loader, desc="Validating", leave=False)
 
     for images, labels in val_loader:
 
@@ -180,7 +186,8 @@ def evaluate(model, val_loader, criterion):
         correct += (preds == labels).sum().item()
         total += labels.size(0)
 
-    return running_loss / total, correct / total
+        loop.set_postfix(loss=loss.item())
+
     return running_loss / total, correct / total
 
 
