@@ -2,7 +2,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import torch
 
-DATA_DIR = "data/"
+DATA_DIR = "data"
 
 dataset = datasets.ImageFolder(
 
