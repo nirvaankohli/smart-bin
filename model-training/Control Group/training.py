@@ -141,7 +141,49 @@ def loss_and_optimizer(model):
 def train_one_epoch(model, train_loader, criterion, optimizer):
 
     model.train()
-    
+    running_loss, correct, total = 0.0, 0, 0
+
+    for images, labels in train_loader:
+
+        images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True), labels.to(device, non_blocking=True)
+
+        optimizer.zero_grad()
+
+        logits = model(images)
+        loss = criterion(logits, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item() * images.size(0)
+        preds = torch.argmax(logits, dim=1)
+        correct += (preds == labels).sum().item()
+        total += labels.size(0)
+
+    return running_loss / total, correct / total
+
+@torch.no_grad()
+def evaluate(model, val_loader, criterion):
+
+    model.eval()
+
+    running_loss, correct, total = 0.0, 0, 0
+
+    for images, labels in val_loader:
+
+        images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True), labels.to(device, non_blocking=True)
+
+        logits = model(images)
+        loss = criterion(logits, labels)
+
+        running_loss += loss.item() * images.size(0)
+        preds = torch.argmax(logits, dim=1)
+        correct += (preds == labels).sum().item()
+        total += labels.size(0)
+
+    return running_loss / total, correct / total
+    return running_loss / total, correct / total
+
+
 
 def main():
 
@@ -171,6 +213,24 @@ def main():
 
     print("Loss + Optimizer ready. \n")
     print("Starting training...")
+
+    best_val_acc = 0.0
+
+    for epoch in range(EPOCHS):
+
+        train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer)
+        val_loss, val_acc = evaluate(model, val_loader, criterion)
+
+        print(f"Epoch [{epoch+1}/{EPOCHS}]")
+        print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
+        print(f"Val   Loss: {val_loss:.4f}, Val   Acc: {val_acc:.4f}\n")
+
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            torch.save(model.state_dict(), "best_control_model.pth")
+            print("Best model saved.\n")
+
+        print("Saved new best model")
     
 
 if __name__ == "__main__":
