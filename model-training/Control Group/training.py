@@ -198,7 +198,7 @@ def evaluate(model, loader, criterion, device):
         percent_done = 100.0 * (batch_idx + 1) / len(loader)
         it_s = loop.format_dict['rate'] if 'rate' in loop.format_dict and loop.format_dict['rate'] is not None else 0.0
 
-        loop.set_postfix(
+        loop.set_postfix(        
             loss=loss.item(),
             acc=correct / total if total > 0 else 0,
             batch=f"{total}/{len(loader.dataset)}",
